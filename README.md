@@ -1,2 +1,2195 @@
-# Huni-project
-Thesis
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const HuniApp());
+}
+
+class HuniApp extends StatelessWidget {
+  const HuniApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'HUNI',
+      theme: ThemeData(
+        fontFamily: 'Arial',
+        scaffoldBackgroundColor: Colors.black,
+      ),
+      home: const StartingPage(),
+    );
+  }
+}
+
+/// STARTING PAGE
+
+class StartingPage extends StatefulWidget {
+  const StartingPage({super.key});
+
+  @override
+  State<StartingPage> createState() => _StartingPageState();
+}
+
+class _StartingPageState extends State<StartingPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const StartPage()),
+        );
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 160,
+              height: 160,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Color(0xFF00E5FF), width: 3),
+              ),
+              child: ClipOval(
+                child: Image.asset('assets/image/logo.png', fit: BoxFit.cover),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const CircularProgressIndicator(color: Color(0xFF00E5FF)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// START PAGE
+class StartPage extends StatelessWidget {
+  const StartPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.network(
+            "https://images.unsplash.com/photo-1623517272043-cae1572afc96?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D  ",
+            fit: BoxFit.cover,
+          ),
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(77, 0, 0, 0),
+                  Color.fromARGB(179, 0, 0, 0),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ClipPath(
+              clipper: BottomCurveClipper(),
+              child: Container(
+                width: double.infinity,
+                color: Colors.black,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 40,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      "HUNI",
+                      style: TextStyle(
+                        color: Color(0xFF00E5FF),
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      "Singing brings joy to the heart",
+                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              minimumSize: const Size(0, 45),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              elevation: 0,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const RegisterPage(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              "Register",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey,
+                              foregroundColor: Colors.white,
+                              minimumSize: const Size(0, 45),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              elevation: 0,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginPage(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              "Login",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "By continuing, you agree to Huni's\nTerms of Use and Privacy Policy",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white54, fontSize: 11),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// REGISTER PAGE
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController username = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.network(
+            "https://images.unsplash.com/photo-1595422656857-ced3a4a0ce25?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2luZ2VyfGVufDB8fDB8fHww ",
+            fit: BoxFit.cover,
+          ),
+          Container(color: const Color.fromARGB(100, 0, 0, 0)),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ClipPath(
+              clipper: BottomCurveClipper(),
+              child: Container(
+                width: double.infinity,
+                color: Colors.black,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 40,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Register",
+                        style: TextStyle(
+                          color: Color(0xFF00E5FF),
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        "Singing brings joy to the heart",
+                        style: TextStyle(color: Colors.white70, fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 30),
+                      TextField(
+                        controller: username,
+                        decoration: const InputDecoration(
+                          hintText: "Create Username",
+                          filled: true,
+                          fillColor: Colors.white12,
+                        ),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      const SizedBox(height: 15),
+                      TextField(
+                        controller: password,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: "Password",
+                          filled: true,
+                          fillColor: Colors.white12,
+                        ),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      const SizedBox(height: 15),
+                      TextField(
+                        controller: confirmPassword,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: "Re-password",
+                          filled: true,
+                          fillColor: Colors.white12,
+                        ),
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      const SizedBox(height: 25),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF00E5FF),
+                          foregroundColor: Colors.black,
+                          minimumSize: const Size(double.infinity, 45),
+                        ),
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MainNavigationPage(),
+                            ),
+                            (route) => false,
+                          );
+                        },
+                        child: const Text("Register"),
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Have an account? ",
+                            style: TextStyle(
+                              color: Colors.white54,
+                              fontSize: 12,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Color(0xFF00E5FF),
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// LOGIN PAGE
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController username = TextEditingController();
+  final TextEditingController password = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.network(
+            "https://images.unsplash.com/photo-1571310100246-e0676f359b42?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D ",
+            fit: BoxFit.cover,
+          ),
+          Container(color: const Color.fromARGB(100, 0, 0, 0)),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ClipPath(
+              clipper: BottomCurveClipper(),
+              child: Container(
+                width: double.infinity,
+                color: Colors.black,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 40,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      "Login",
+                      style: TextStyle(
+                        color: Color(0xFF00E5FF),
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      "Singing brings joy to the heart",
+                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 30),
+                    TextField(
+                      controller: username,
+                      decoration: const InputDecoration(
+                        hintText: "Username",
+                        filled: true,
+                        fillColor: Colors.white12,
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 15),
+                    TextField(
+                      controller: password,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        hintText: "Password",
+                        filled: true,
+                        fillColor: Colors.white12,
+                      ),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 25),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF00E5FF),
+                        foregroundColor: Colors.black,
+                        minimumSize: const Size(double.infinity, 45),
+                      ),
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MainNavigationPage(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      child: const Text("Login"),
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Doesn't have an account yet? ",
+                          style: TextStyle(color: Colors.white54, fontSize: 12),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "Register",
+                            style: TextStyle(
+                              color: Color(0xFF00E5FF),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// BOTTOM CURVE CLIPPER
+class BottomCurveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+
+    path.lineTo(0, 60);
+
+    path.quadraticBezierTo(size.width / 2, 0, size.width, 60);
+
+    path.lineTo(size.width, size.height);
+
+    path.lineTo(0, size.height);
+
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
+  }
+}
+
+/// MAIN NAVIGATION
+
+class MainNavigationPage extends StatefulWidget {
+  const MainNavigationPage({super.key});
+
+  @override
+  State<MainNavigationPage> createState() => _MainNavigationPageState();
+}
+
+class _MainNavigationPageState extends State<MainNavigationPage> {
+  int _currentIndex = 1;
+
+  final List<Widget> _pages = [
+    const EducationModePage(),
+    const HomePage(),
+    const UserProfilePage(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) => setState(() => _currentIndex = index),
+        backgroundColor: Colors.black,
+        selectedItemColor: const Color(0xFF00E5FF),
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Education'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+      ),
+    );
+  }
+}
+
+/// HOME PAGE
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: TextField(
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: "Search for songs",
+                          hintStyle: TextStyle(color: Colors.grey[600]),
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    icon: const Icon(Icons.settings, color: Colors.white),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Trending",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.grey[800],
+                      backgroundImage: const NetworkImage(
+                        "https://images.unsplash.com/photo-1676063258992-1562bbecb583?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D  ",
+                      ),
+                    ),
+                    title: const Text(
+                      "Dandelion",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    subtitle: const Text(
+                      "Single • 2023",
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RecordingPage(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[800],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Text(
+                              "Start",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(Icons.more_vert, color: Colors.grey),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// EDUCATION MODE
+class EducationModePage extends StatelessWidget {
+  const EducationModePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
+              Icon(Icons.school, size: 80, color: const Color(0xFF00E5FF)),
+              const SizedBox(height: 16),
+              const Text(
+                "EDUCATION MODE",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                ),
+              ),
+              const SizedBox(height: 40),
+              _buildEducationButton(
+                context,
+                "Voice Classification",
+                "Matching System",
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const VoiceClassificationPage(),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildEducationButton(
+                context,
+                "Voice-Piano",
+                "Matching System",
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const VoicePianoPage(),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildEducationButton(
+                context,
+                "Solfege Pitch",
+                "Pitch Matching System",
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SolfegePitchPage(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEducationButton(
+    BuildContext context,
+    String title,
+    String subtitle,
+    VoidCallback onTap,
+  ) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: TextStyle(color: Colors.grey[600], fontSize: 12),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// VOICE PAGE
+
+class VoiceClassificationPage extends StatelessWidget {
+  const VoiceClassificationPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Column(
+          children: [
+            const Icon(Icons.school, color: Color(0xFF00E5FF), size: 30),
+            const SizedBox(height: 4),
+            const Text(
+              "Voice Classification",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          ],
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 40),
+          Container(
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.grey[850],
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Center(
+              child: Text(
+                "E2",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 72,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          const Text(
+            "Details",
+            style: TextStyle(color: Colors.white70, fontSize: 14),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              children: [
+                _buildDetailBox("Voice Type"),
+                const SizedBox(height: 10),
+                _buildDetailBox("Range"),
+                const SizedBox(height: 10),
+                _buildDetailBox("Frequency"),
+              ],
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.share, color: Colors.white),
+                  onPressed: () {},
+                ),
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.mic, color: Colors.white, size: 30),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.refresh, color: Colors.white),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailBox(String label) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(label, style: const TextStyle(color: Colors.white70)),
+    );
+  }
+}
+
+/// VOICE PIANO PAGE
+
+class VoicePianoPage extends StatefulWidget {
+  const VoicePianoPage({super.key});
+
+  @override
+  State<VoicePianoPage> createState() => _VoicePianoPageState();
+}
+
+class _VoicePianoPageState extends State<VoicePianoPage> {
+  String selectedNote = "C";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Column(
+          children: [
+            const Icon(Icons.school, color: Color(0xFF00E5FF), size: 30),
+            const SizedBox(height: 4),
+            const Text(
+              "Voice-Piano",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          ],
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          const Text(
+            "Sing the specific note to match with the piano",
+            style: TextStyle(color: Colors.grey, fontSize: 12),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 30),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            height: 150,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              children: [
+                _buildWhiteKey("G"),
+                _buildBlackKey(),
+                _buildWhiteKey("A"),
+                _buildBlackKey(),
+                _buildWhiteKey("B"),
+                _buildWhiteKey("C", isSelected: selectedNote == "C"),
+                _buildBlackKey(),
+                _buildWhiteKey("D"),
+                _buildBlackKey(),
+                _buildWhiteKey("E"),
+              ],
+            ),
+          ),
+          const SizedBox(height: 30),
+          const Text(
+            "Details",
+            style: TextStyle(color: Colors.white70, fontSize: 14),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              children: [
+                _buildDetailBox("Accuracy"),
+                const SizedBox(height: 10),
+                _buildDetailBox("Musical Note"),
+                const SizedBox(height: 10),
+                _buildDetailBox("Your Tone"),
+              ],
+            ),
+          ),
+          const Spacer(),
+          Column(
+            children: [
+              Container(
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Colors.grey[900],
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.grey[800]!, width: 2),
+                ),
+                child: const Icon(Icons.mic, color: Colors.white, size: 35),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                "Record",
+                style: TextStyle(color: Colors.white70, fontSize: 12),
+              ),
+              const SizedBox(height: 4),
+              const Text(
+                "Tap to start recording",
+                style: TextStyle(color: Colors.grey, fontSize: 10),
+              ),
+            ],
+          ),
+          const SizedBox(height: 40),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWhiteKey(String note, {bool isSelected = false}) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => setState(() => selectedNote = note),
+        child: Container(
+          decoration: BoxDecoration(
+            color: isSelected ? const Color(0xFF00E5FF) : Colors.white,
+            border: Border.all(color: Colors.grey[300]!),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Center(
+            child: Text(
+              note,
+              style: TextStyle(
+                color: isSelected ? Colors.black : Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBlackKey() {
+    return Container(
+      width: 20,
+      height: 90,
+      color: Colors.black,
+      margin: const EdgeInsets.symmetric(horizontal: -10),
+      child: const VerticalDivider(color: Colors.grey, width: 1),
+    );
+  }
+
+  Widget _buildDetailBox(String label) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(label, style: const TextStyle(color: Colors.white70)),
+    );
+  }
+}
+
+/// SOLFEGE PITCH PAGE
+
+class SolfegePitchPage extends StatefulWidget {
+  const SolfegePitchPage({super.key});
+
+  @override
+  State<SolfegePitchPage> createState() => _SolfegePitchPageState();
+}
+
+class _SolfegePitchPageState extends State<SolfegePitchPage> {
+  String currentNote = "do";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Column(
+          children: [
+            const Icon(Icons.school, color: Color(0xFF00E5FF), size: 30),
+            const SizedBox(height: 4),
+            const Text(
+              "Solfege Pitch",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          ],
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 40),
+          Container(
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.grey[850],
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Center(
+              child: Text(
+                currentNote,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 72,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          ElevatedButton(
+            onPressed: () {
+              final notes = ["do", "re", "mi", "fa", "sol", "la", "ti"];
+              final currentIndex = notes.indexOf(currentNote);
+              setState(() {
+                currentNote = notes[(currentIndex + 1) % notes.length];
+              });
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF00E5FF),
+              foregroundColor: Colors.black,
+              minimumSize: const Size(100, 40),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: const Text("Next"),
+          ),
+          const SizedBox(height: 30),
+          const Text(
+            "Details",
+            style: TextStyle(color: Colors.white70, fontSize: 14),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              children: [
+                _buildDetailBox("Accuracy"),
+                const SizedBox(height: 10),
+                _buildDetailBox("User Range"),
+              ],
+            ),
+          ),
+          const Spacer(),
+          Column(
+            children: [
+              Container(
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Colors.grey[900],
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.grey[800]!, width: 2),
+                ),
+                child: const Icon(Icons.mic, color: Colors.white, size: 35),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                "Record",
+                style: TextStyle(color: Colors.white70, fontSize: 12),
+              ),
+              const SizedBox(height: 4),
+              const Text(
+                "Tap to start recording",
+                style: TextStyle(color: Colors.grey, fontSize: 10),
+              ),
+            ],
+          ),
+          const SizedBox(height: 40),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailBox(String label) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(label, style: const TextStyle(color: Colors.white70)),
+    );
+  }
+}
+
+/// USER PROFILE PAGE
+
+class UserProfilePage extends StatelessWidget {
+  const UserProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: const Color(0xFF00E5FF), width: 3),
+                  image: const DecorationImage(
+                    image: NetworkImage(
+                      "https://tse1.mm.bing.net/th/id/OIP.pbRd29lKf-GB1P3-6XnAcQHaLG?rs=1&pid=ImgDetMain&o=7&rm=3 ",
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                "ID: 02000352497",
+                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+              ),
+              const SizedBox(height: 4),
+              const Text(
+                "Yasmin",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 40),
+              _buildMenuButton(
+                context,
+                "Records",
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RecordsPage()),
+                ),
+              ),
+              const SizedBox(height: 12),
+              _buildMenuButton(
+                context,
+                "Saved Music",
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SavedMusicPage(),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              _buildMenuButton(
+                context,
+                "Recently Deleted",
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RecentlyDeletedPage(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuButton(
+    BuildContext context,
+    String title,
+    VoidCallback onTap,
+  ) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 18),
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// RECORDS PAGE
+
+class RecordsPage extends StatelessWidget {
+  const RecordsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          "Records",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: TextField(
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: "Search Records",
+                  hintStyle: TextStyle(color: Colors.grey[600]),
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Recent",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return _buildRecordItem();
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecordItem() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: const DecorationImage(
+                image: NetworkImage(
+                  "https://media.istockphoto.com/id/2185400651/photo/rock-musicians-in-fashionable-outfits-performing-alternative-or-punk-rock-music-on-festival.webp?a=1&b=1&s=612x612&w=0&k=20&c=Pcke0KkXGq9x0ca5UKcCSRJ1sf00dzvqdK_EZHV1eo4=  ",
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Dadalin",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Reggae Version",
+                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                ),
+                Text(
+                  "12-12-24",
+                  style: TextStyle(color: Colors.grey[600], fontSize: 11),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  "Start",
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Icon(Icons.delete_outline, color: Colors.grey, size: 20),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// SAVED MUSIC PAGE
+
+class SavedMusicPage extends StatelessWidget {
+  const SavedMusicPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          "Saved Music",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: TextField(
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: "Search saved music",
+                  hintStyle: TextStyle(color: Colors.grey[600]),
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Recent",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return _buildSavedMusicItem();
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSavedMusicItem() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: const DecorationImage(
+                image: NetworkImage(
+                  "https://plus.unsplash.com/premium_photo-1723680003602-30e3b2e67bee?q=80&w=1916&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D  ",
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Dadalin",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Reggae Version",
+                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                ),
+                Text(
+                  "12-12-24",
+                  style: TextStyle(color: Colors.grey[600], fontSize: 11),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF00E5FF),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  "Saved",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Icon(Icons.delete_outline, color: Colors.grey, size: 20),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// RECENTLY DELETED PAGE
+
+class RecentlyDeletedPage extends StatelessWidget {
+  const RecentlyDeletedPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          "Recently Deleted",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: TextField(
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: "Search Records",
+                  hintStyle: TextStyle(color: Colors.grey[600]),
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Recent",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return _buildDeletedItem();
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDeletedItem() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              image: const DecorationImage(
+                image: NetworkImage(
+                  "https://images.unsplash.com/photo-1595422656857-ced3a4a0ce25?q=80&w=708&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D ",
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Dadalin",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Reggae Version",
+                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                ),
+                Text(
+                  "12-12-24",
+                  style: TextStyle(color: Colors.grey[600], fontSize: 11),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  "Restore",
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Icon(Icons.delete_forever, color: Colors.grey, size: 20),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// RECORDING PAGE
+class RecordingPage extends StatefulWidget {
+  const RecordingPage({super.key});
+
+  @override
+  State<RecordingPage> createState() => _RecordingPageState();
+}
+
+class _RecordingPageState extends State<RecordingPage> {
+  bool isRecording = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.mic, color: Colors.red, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              "Voice Recording",
+              style: TextStyle(color: Colors.grey[400], fontSize: 14),
+            ),
+          ],
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          Container(
+            height: 200,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: CustomPaint(
+              size: const Size(double.infinity, 200),
+              painter: WaveformPainter(),
+            ),
+          ),
+          const SizedBox(height: 40),
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildLyricLine("Nag-iisa at hindi mapakali", true),
+                    _buildLyricLine(
+                      "Bangung-bangung pakiramdam sa aking tabi",
+                      false,
+                    ),
+                    _buildLyricLine(
+                      "Pinipilit kong limutin ka ngunit di magawa",
+                      false,
+                    ),
+                    _buildLyricLine(
+                      "Sa bawat kong galaw ay laging hanap ka",
+                      false,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildLyricLine("Nag-iisa ang isang kagaya mo", false),
+                    _buildLyricLine(
+                      "Na nagmamahal at nagtitiwala sa isang katulad ko",
+                      false,
+                    ),
+                    _buildLyricLine(
+                      "Dahil nga ba di ko man lang nabigyan ng halaga?",
+                      false,
+                    ),
+                    _buildLyricLine("Nagsisisi ngayong wala ka na", false),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.skip_previous,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () {},
+                ),
+                const SizedBox(width: 20),
+                IconButton(
+                  icon: Icon(
+                    isRecording ? Icons.pause : Icons.play_arrow,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isRecording = !isRecording;
+                    });
+                  },
+                ),
+                const SizedBox(width: 20),
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.mic, color: Colors.white, size: 30),
+                    onPressed: () {},
+                  ),
+                ),
+                const SizedBox(width: 20),
+                IconButton(
+                  icon: const Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                  onPressed: () {},
+                ),
+                const SizedBox(width: 20),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF00E5FF),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ResultsPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Finish",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLyricLine(String text, bool isCurrent) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: isCurrent ? Colors.white : Colors.grey[600],
+          fontSize: 14,
+          fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
+
+/// WAVEFORM PAINTER FOR RECORDING PAGE
+
+class WaveformPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = const Color(0xFF00E5FF)
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke;
+
+    final path = Path();
+    final centerY = size.height / 2;
+
+    for (double x = 0; x < size.width; x += 5) {
+      final amplitude = 20 + (x % 100) / 5;
+      final y = centerY + amplitude * (x % 10 > 5 ? 1 : -1);
+      if (x == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
+/// RESULTS PAGE
+
+class ResultsPage extends StatelessWidget {
+  const ResultsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          "Records",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[800],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Feedback: ",
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                        Text(
+                          "Good",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[800],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Score: ",
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                        Text(
+                          "90",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Best Lyrics",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    _buildLyricLine("Nag-iisa at hindi mapakali", Colors.green),
+                    _buildLyricLine(
+                      "Bangung-bangung pakiramdam sa aking tabi",
+                      Colors.green,
+                    ),
+                    _buildLyricLine(
+                      "Pinipilit kong limutin ka ngunit di magawa",
+                      Colors.green,
+                    ),
+                    _buildLyricLine(
+                      "Sa bawat kong galaw ay laging hanap ka",
+                      Colors.red,
+                    ),
+                    _buildLyricLine(
+                      "Nag-iisa ang isang kagaya mo",
+                      Colors.green,
+                    ),
+                    _buildLyricLine(
+                      "Na nagmamahal at nagtitiwala sa isang katulad ko",
+                      Colors.green,
+                    ),
+                    _buildLyricLine(
+                      "Dahil nga ba di ko man lang nabigyan ng halaga?",
+                      Colors.yellow,
+                    ),
+                    _buildLyricLine(
+                      "Nagsisisi ngayong wala ka na",
+                      Colors.green,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildLyricLine("Kulang ako kung wala ka", Colors.green),
+                    _buildLyricLine(
+                      "Di ako mabubuo kung di kita kasama",
+                      Colors.green,
+                    ),
+                    _buildLyricLine(
+                      "Nasasayang na ako na lagi kang nariyan",
+                      Colors.green,
+                    ),
+                    _buildLyricLine(
+                      "Di ko kayang mag-isa puso ay pagbigyan",
+                      Colors.green,
+                    ),
+                    _buildLyricLine(
+                      "Kulang ako, kulang ako kung wala ka, oh",
+                      Colors.green,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RecordingPage(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[800],
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text("Try Again"),
+                  ),
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainNavigationPage(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF00E5FF),
+                      foregroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLyricLine(String text, Color color) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: color,
+          fontSize: 13,
+          fontWeight: color == Colors.green
+              ? FontWeight.w500
+              : FontWeight.normal,
+        ),
+      ),
+    );
+  }
+}
+
+/// REUSABLE TEXTFIELD
+
+Widget buildTextField(
+  TextEditingController controller,
+  String hint, {
+  bool obscureText = false,
+}) {
+  return TextFormField(
+    controller: controller,
+    obscureText: obscureText,
+    style: const TextStyle(color: Colors.white),
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return "Required field";
+      }
+      return null;
+    },
+    decoration: InputDecoration(
+      hintText: hint,
+      hintStyle: const TextStyle(color: Colors.white54),
+      filled: true,
+      fillColor: Colors.grey[800],
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+    ),
+  );
+}
+
