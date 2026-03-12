@@ -105,10 +105,8 @@ class StartPage extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 color: Colors.black,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30,
-                  vertical: 40,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -231,10 +229,8 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 width: double.infinity,
                 color: Colors.black,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30,
-                  vertical: 40,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -308,10 +304,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         children: [
                           const Text(
                             "Have an account? ",
-                            style: TextStyle(
-                              color: Colors.white54,
-                              fontSize: 12,
-                            ),
+                            style:
+                                TextStyle(color: Colors.white54, fontSize: 12),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -370,10 +364,8 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 width: double.infinity,
                 color: Colors.black,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30,
-                  vertical: 40,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -472,7 +464,12 @@ class BottomCurveClipper extends CustomClipper<Path> {
 
     path.lineTo(0, 60);
 
-    path.quadraticBezierTo(size.width / 2, 0, size.width, 60);
+    path.quadraticBezierTo(
+      size.width / 2,
+      0,
+      size.width,
+      60,
+    );
 
     path.lineTo(size.width, size.height);
 
@@ -530,8 +527,128 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
 /// HOME PAGE
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  void _showRecordOptions() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[800],
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "Record Options",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                // With Karaoke Button
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RecordingPage(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF00E5FF),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "With Karaoke",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                // Without Karaoke Button
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RecordingPage(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: const Color(0xFF00E5FF)),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "Without Karaoke",
+                        style: TextStyle(
+                          color: Color(0xFF00E5FF),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                // Cancel Button
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text(
+                    "Cancel",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -654,6 +771,32 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+      // Record Button at Bottom Right
+      floatingActionButton: GestureDetector(
+        onTap: _showRecordOptions,
+        child: Container(
+          width: 70,
+          height: 70,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.3),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: const Icon(
+            Icons.mic,
+            color: Colors.red,
+            size: 35,
+          ),
+        ),
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.endFloat, // Right side
     );
   }
 }
@@ -672,7 +815,7 @@ class EducationModePage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 40),
-              Icon(Icons.school, size: 80, color: const Color(0xFF00E5FF)),
+              const Icon(Icons.school, size: 80, color: Color(0xFF00E5FF)),
               const SizedBox(height: 16),
               const Text(
                 "EDUCATION MODE",
@@ -692,18 +835,6 @@ class EducationModePage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => const VoiceClassificationPage(),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              _buildEducationButton(
-                context,
-                "Voice-Piano",
-                "Matching System",
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const VoicePianoPage(),
                   ),
                 ),
               ),
@@ -2153,9 +2284,8 @@ class ResultsPage extends StatelessWidget {
         style: TextStyle(
           color: color,
           fontSize: 13,
-          fontWeight: color == Colors.green
-              ? FontWeight.w500
-              : FontWeight.normal,
+          fontWeight:
+              color == Colors.green ? FontWeight.w500 : FontWeight.normal,
         ),
       ),
     );
@@ -2192,3 +2322,4 @@ Widget buildTextField(
     ),
   );
 }
+
