@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/main_navigation_page.dart';
+import 'package:flutter_application_1/login_page.dart'; 
 import 'bottom_curve_clipper.dart';
+import 'services/api_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -15,13 +16,21 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController confirmPassword = TextEditingController();
 
   @override
+  void dispose() {
+    username.dispose();
+    password.dispose();
+    confirmPassword.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
           Image.network(
-            "https://images.unsplash.com/photo-1595422656857-ced3a4a0ce25?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2luZ2VyfGVufDB8fDB8fHww ",
+            "https://images.unsplash.com/photo-1595422656857-ced3a4a0ce25?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0",
             fit: BoxFit.cover,
           ),
           Container(color: const Color.fromARGB(100, 0, 0, 0)),
@@ -32,8 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 width: double.infinity,
                 color: Colors.black,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -86,18 +94,43 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(height: 25),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF00E5FF),
+                          backgroundColor: const Color(0xFF00E5FF),
                           foregroundColor: Colors.black,
                           minimumSize: const Size(double.infinity, 45),
                         ),
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MainNavigationPage(),
-                            ),
-                            (route) => false,
-                          );
+                        onPressed: () async {
+                          if (password.text != confirmPassword.text) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Passwords do not match")),
+                            );
+                            return;
+                          }
+
+                          try {
+                            var result = await ApiService.register(
+                              username.text,
+                              password.text,
+                            );
+
+                            if (result["success"] == true) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Registration successful! Please log in.")),
+                              );
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(builder: (context) => const LoginPage()),
+                                (route) => false,
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Error: ${result["error"]}")),
+                              );
+                            }
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Network error: $e")),
+                            );
+                          }
                         },
                         child: const Text("Register"),
                       ),
@@ -107,8 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         children: [
                           const Text(
                             "Have an account? ",
-                            style:
-                                TextStyle(color: Colors.white54, fontSize: 12),
+                            style: TextStyle(color: Colors.white54, fontSize: 12),
                           ),
                           GestureDetector(
                             onTap: () {
