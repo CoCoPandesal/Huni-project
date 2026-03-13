@@ -10,6 +10,7 @@ class RecordingPage extends StatefulWidget {
 
 class _RecordingPageState extends State<RecordingPage> {
   bool isRecording = false;
+  bool isPlaying = false; // NEW STATE
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,8 @@ class _RecordingPageState extends State<RecordingPage> {
       body: Column(
         children: [
           const SizedBox(height: 20),
+
+          /// WAVEFORM
           Container(
             height: 200,
             margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -46,7 +49,10 @@ class _RecordingPageState extends State<RecordingPage> {
               painter: WaveformPainter(),
             ),
           ),
+
           const SizedBox(height: 40),
+
+          /// LYRICS BOX
           Expanded(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -60,39 +66,35 @@ class _RecordingPageState extends State<RecordingPage> {
                   children: [
                     _buildLyricLine("Nag-iisa at hindi mapakali", true),
                     _buildLyricLine(
-                      "Bangung-bangung pakiramdam sa aking tabi",
-                      false,
-                    ),
+                        "Bangung-bangung pakiramdam sa aking tabi", false),
                     _buildLyricLine(
-                      "Pinipilit kong limutin ka ngunit di magawa",
-                      false,
-                    ),
+                        "Pinipilit kong limutin ka ngunit di magawa", false),
                     _buildLyricLine(
-                      "Sa bawat kong galaw ay laging hanap ka",
-                      false,
-                    ),
+                        "Sa bawat kong galaw ay laging hanap ka", false),
                     const SizedBox(height: 20),
                     _buildLyricLine("Nag-iisa ang isang kagaya mo", false),
                     _buildLyricLine(
-                      "Na nagmamahal at nagtitiwala sa isang katulad ko",
-                      false,
-                    ),
+                        "Na nagmamahal at nagtitiwala sa isang katulad ko",
+                        false),
                     _buildLyricLine(
-                      "Dahil nga ba di ko man lang nabigyan ng halaga?",
-                      false,
-                    ),
+                        "Dahil nga ba di ko man lang nabigyan ng halaga?",
+                        false),
                     _buildLyricLine("Nagsisisi ngayong wala ka na", false),
                   ],
                 ),
               ),
             ),
           ),
+
           const SizedBox(height: 20),
+
+          /// CONTROL BUTTONS
           Container(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                /// PREVIOUS
                 IconButton(
                   icon: const Icon(
                     Icons.skip_previous,
@@ -101,7 +103,10 @@ class _RecordingPageState extends State<RecordingPage> {
                   ),
                   onPressed: () {},
                 ),
+
                 const SizedBox(width: 20),
+
+                /// PLAY / PAUSE
                 IconButton(
                   icon: Icon(
                     isRecording ? Icons.pause : Icons.play_arrow,
@@ -114,7 +119,10 @@ class _RecordingPageState extends State<RecordingPage> {
                     });
                   },
                 ),
+
                 const SizedBox(width: 20),
+
+                /// MIC BUTTON
                 Container(
                   width: 60,
                   height: 60,
@@ -127,21 +135,36 @@ class _RecordingPageState extends State<RecordingPage> {
                     onPressed: () {},
                   ),
                 ),
+
                 const SizedBox(width: 20),
+
+                /// SECOND PLAY BUTTON (UPDATED)
                 IconButton(
-                  icon: const Icon(
-                    Icons.play_arrow,
+                  icon: Icon(
+                    isPlaying ? Icons.pause : Icons.play_arrow,
                     color: Colors.white,
                     size: 40,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      isPlaying = !isPlaying;
+                    });
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ResultsPage(),
+                      ),
+                    );
+                  },
                 ),
+
                 const SizedBox(width: 20),
+
+                /// FINISH BUTTON
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     color: const Color(0xFF00E5FF),
                     borderRadius: BorderRadius.circular(20),
@@ -188,7 +211,7 @@ class _RecordingPageState extends State<RecordingPage> {
   }
 }
 
-/// WAVEFORM PAINTER FOR RECORDING PAGE
+/// WAVEFORM PAINTER
 
 class WaveformPainter extends CustomPainter {
   @override
@@ -204,6 +227,7 @@ class WaveformPainter extends CustomPainter {
     for (double x = 0; x < size.width; x += 5) {
       final amplitude = 20 + (x % 100) / 5;
       final y = centerY + amplitude * (x % 10 > 5 ? 1 : -1);
+
       if (x == 0) {
         path.moveTo(x, y);
       } else {
@@ -217,3 +241,4 @@ class WaveformPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
+
