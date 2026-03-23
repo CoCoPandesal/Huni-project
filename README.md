@@ -1,1 +1,1 @@
-change nako ang education mode and home page 
+final thesis new ang name saa bagong code nato 
