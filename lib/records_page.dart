@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/results_page.dart';
+import 'results_page.dart';
 
 class RecordingPage extends StatefulWidget {
   const RecordingPage({super.key});
@@ -66,19 +66,27 @@ class _RecordingPageState extends State<RecordingPage> {
                   children: [
                     _buildLyricLine("Nag-iisa at hindi mapakali", true),
                     _buildLyricLine(
-                        "Bangung-bangung pakiramdam sa aking tabi", false),
+                      "Bangung-bangung pakiramdam sa aking tabi",
+                      false,
+                    ),
                     _buildLyricLine(
-                        "Pinipilit kong limutin ka ngunit di magawa", false),
+                      "Pinipilit kong limutin ka ngunit di magawa",
+                      false,
+                    ),
                     _buildLyricLine(
-                        "Sa bawat kong galaw ay laging hanap ka", false),
+                      "Sa bawat kong galaw ay laging hanap ka",
+                      false,
+                    ),
                     const SizedBox(height: 20),
                     _buildLyricLine("Nag-iisa ang isang kagaya mo", false),
                     _buildLyricLine(
-                        "Na nagmamahal at nagtitiwala sa isang katulad ko",
-                        false),
+                      "Na nagmamahal at nagtitiwala sa isang katulad ko",
+                      false,
+                    ),
                     _buildLyricLine(
-                        "Dahil nga ba di ko man lang nabigyan ng halaga?",
-                        false),
+                      "Dahil nga ba di ko man lang nabigyan ng halaga?",
+                      false,
+                    ),
                     _buildLyricLine("Nagsisisi ngayong wala ka na", false),
                   ],
                 ),
@@ -163,8 +171,10 @@ class _RecordingPageState extends State<RecordingPage> {
 
                 /// FINISH BUTTON
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: const Color(0xFF00E5FF),
                     borderRadius: BorderRadius.circular(20),
@@ -241,4 +251,3 @@ class WaveformPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
-

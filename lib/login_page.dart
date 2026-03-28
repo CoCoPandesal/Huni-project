@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/main_navigation_page.dart';
+import 'main_navigation_page.dart';
 import 'bottom_curve_clipper.dart';
-import 'services/api_service.dart'; 
+import 'services/api_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -32,7 +32,10 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 width: double.infinity,
                 color: Colors.black,
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 40,
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -90,12 +93,16 @@ class _LoginPageState extends State<LoginPage> {
                           );
                           Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (context) => const MainNavigationPage()),
+                            MaterialPageRoute(
+                              builder: (context) => const MainNavigationPage(),
+                            ),
                             (route) => false,
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Login failed: ${result["error"]}")),
+                            SnackBar(
+                              content: Text("Login failed: ${result["error"]}"),
+                            ),
                           );
                         }
                       },

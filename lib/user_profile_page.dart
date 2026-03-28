@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/recently_deleted_page.dart';
-import 'package:flutter_application_1/recording_page.dart';
-import 'package:flutter_application_1/saved_music_page.dart';
+import 'recently_deleted_page.dart';
+import 'recording_page.dart';
+import 'saved_music_page.dart';
 
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({super.key});

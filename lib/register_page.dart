@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/login_page.dart'; 
+import 'login_page.dart';
 import 'bottom_curve_clipper.dart';
 import 'services/api_service.dart';
 
@@ -41,7 +41,10 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 width: double.infinity,
                 color: Colors.black,
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 40,
+                ),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -101,7 +104,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         onPressed: () async {
                           if (password.text != confirmPassword.text) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Passwords do not match")),
+                              const SnackBar(
+                                content: Text("Passwords do not match"),
+                              ),
                             );
                             return;
                           }
@@ -114,16 +119,24 @@ class _RegisterPageState extends State<RegisterPage> {
 
                             if (result["success"] == true) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Registration successful! Please log in.")),
+                                const SnackBar(
+                                  content: Text(
+                                    "Registration successful! Please log in.",
+                                  ),
+                                ),
                               );
                               Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(builder: (context) => const LoginPage()),
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginPage(),
+                                ),
                                 (route) => false,
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Error: ${result["error"]}")),
+                                SnackBar(
+                                  content: Text("Error: ${result["error"]}"),
+                                ),
                               );
                             }
                           } catch (e) {
@@ -140,7 +153,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         children: [
                           const Text(
                             "Have an account? ",
-                            style: TextStyle(color: Colors.white54, fontSize: 12),
+                            style: TextStyle(
+                              color: Colors.white54,
+                              fontSize: 12,
+                            ),
                           ),
                           GestureDetector(
                             onTap: () {

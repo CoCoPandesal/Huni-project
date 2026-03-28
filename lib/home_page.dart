@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/records_page.dart';
+import 'records_page.dart';
 //import 'package:flutter_application_1/recording_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -263,11 +263,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          child: const Icon(
-            Icons.mic,
-            color: Colors.red,
-            size: 35,
-          ),
+          child: const Icon(Icons.mic, color: Colors.red, size: 35),
         ),
       ),
       floatingActionButtonLocation:
