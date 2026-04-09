@@ -1,0 +1,17 @@
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:flutter_application_1/main.dart';
+
+void main() {
+  testWidgets('HUNI start page loads', (WidgetTester tester) async {
+    // Build the app
+    await tester.pumpWidget(const HuniApp());
+
+    // Verify HUNI title appears
+    expect(find.text('HUNI'), findsOneWidget);
+
+    // Verify buttons exist
+    expect(find.text('Register'), findsOneWidget);
+    expect(find.text('Login'), findsOneWidget);
+  });
+}
